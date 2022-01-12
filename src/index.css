@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'ReindeerChristmas';
+    src: local('ReindeerChristmas'), url(./assets/fonts/reindeerChristmas.otf) format('truetype');
+}
+
+@font-face {
+    font-family: 'CartoonBlocksChristmas';
+    src: local('CartoonBlocksChristmas'), url(./assets/fonts/cartoonBlocksChristmas.otf) format('truetype');
+}
+
+@font-face {
+    font-family: 'RobotoThin';
+    src: local('RobotoThin'), url(./assets/fonts/robotoThin.ttf) format('truetype');
+}
+
+body,
+#root {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+}
