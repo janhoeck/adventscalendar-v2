@@ -5,7 +5,9 @@ class AdventsCalendarUtil {
      * Checks if a current day is allowed to open
      */
     canAccessDay = (day: number): boolean => {
-        const currentDate = moment();
+        //const currentDate = moment();
+        // JUST FOR DEMO PURPOSES
+        const currentDate = moment('2021-12-24T10:00:00');
 
         // Open a door is just allowed in december (zero based)
         if (currentDate.month() !== 11) {
