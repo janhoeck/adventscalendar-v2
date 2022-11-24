@@ -1,18 +1,22 @@
-import { ThemeProvider } from '@material-ui/styles';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { App } from './App';
 import reportWebVitals from './reportWebVitals';
-import { Theme } from './tools/theme';
+import Snowflakes from 'magic-snowflakes';
+
 import './index.css';
 
+const snowflakes = new Snowflakes({
+    color: '#FFF',
+    count: 20,
+});
+snowflakes.start();
+
 ReactDOM.render(
-    <ThemeProvider theme={Theme}>
-        <HashRouter>
-            <App />
-        </HashRouter>
-    </ThemeProvider>,
+    <BrowserRouter basename='/adventscalendar'>
+        <App />
+    </BrowserRouter>,
     document.getElementById('root')
 );
 

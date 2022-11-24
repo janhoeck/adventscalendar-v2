@@ -1,0 +1,16 @@
+@import '../../tools/theme/vars.scss';
+
+.root {
+    height: 30px;
+    background-color: $color_primary_main;
+    color: $color_text;
+    border: none;
+    box-shadow: 2px 2px 0px 0px $color_primary_dark;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: 0.2s all;
+
+    &:active {
+        transform: scale(0.98);
+    }
+}

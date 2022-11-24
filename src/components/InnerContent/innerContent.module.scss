@@ -1,0 +1,17 @@
+@import '../../tools/theme/vars';
+
+.root {
+    flex: 1;
+    overflow: auto;
+    padding-bottom: 20vh;
+
+    .inner {
+        padding: #{$spacing * 3} 5vw;
+        max-width: 1600px;
+        margin: 0 auto;
+
+        @media (max-width: 959.95px) {
+            padding: $spacing * 2;
+        }
+    }
+}

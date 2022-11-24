@@ -1,0 +1,15 @@
+@import '../../tools//theme/vars.scss';
+
+.root {
+    background: linear-gradient(0deg, rgba(255, 166, 158, 1) 0%, rgba(134, 22, 87, 1) 100%);
+
+    * {
+        font-family: $normal_text_font;
+        color: $color_text;
+    }
+
+    img {
+        width: 100%;
+        margin-top: $spacing * 4;
+    }
+}

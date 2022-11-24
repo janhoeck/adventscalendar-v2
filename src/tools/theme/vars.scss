@@ -1,0 +1,32 @@
+$color_background: #0d5a5a;
+$color_text: #ffffff;
+$color_primary_light: #c5424f;
+$color_primary_main: #cf3242;
+$color_primary_dark: #6e1f27;
+
+$spacing: 8px;
+
+$normal_text_font: Lucida Grande, Lucida Sans Unicode, Lucida Sans, Geneva, Verdana, sans-serif;
+
+@keyframes shake {
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}

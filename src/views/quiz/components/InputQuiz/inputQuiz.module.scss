@@ -1,0 +1,17 @@
+@import '../../../../tools/theme/vars.scss';
+
+.root {
+    .container {
+        display: flex;
+        gap: $spacing * 2;
+    }
+
+    input {
+        flex: 1;
+        border-radius: 3px;
+        border-color: transparent;
+        height: 24px;
+        font-size: 12px;
+        outline: none;
+    }
+}

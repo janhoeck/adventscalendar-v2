@@ -1,0 +1,55 @@
+@import '../../tools/theme/vars';
+
+.root {
+    background: #d7e7db;
+
+    .viewHeader {
+        color: #000;
+    }
+
+    .calenderItem {
+        width: 100%;
+        height: 150px;
+
+        .front,
+        .back {
+            background: #00a269;
+        }
+
+        .front {
+            box-shadow: 5px 5px 0px 0px #01886a;
+            &:after {
+                border: 2px dashed #016751;
+            }
+        }
+    }
+
+    .content {
+        margin-top: $spacing * 4;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        grid-gap: $spacing * 2;
+
+        .textContainer {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing * 2;
+
+            .text {
+                white-space: pre-line;
+                font-family: $normal_text_font;
+                color: #000000;
+                font-size: 1rem;
+                font-weight: 400;
+                line-height: 1.5;
+                letter-spacing: 0.00938em;
+            }
+        }
+
+        .image {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    }
+}

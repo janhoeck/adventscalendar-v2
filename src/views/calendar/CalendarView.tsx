@@ -1,37 +1,27 @@
-import { makeStyles } from '@material-ui/styles';
-import clsx from 'clsx';
-import React, { HTMLAttributes, useCallback, useMemo, useRef, useState } from 'react';
-import { useHistory, useLocation } from 'react-router';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router';
 import { calendarTilesConfiguration } from '../../assets/configuration/calendarTilesConfiguration';
 import { CalendarItemGrid } from '../../components/CalendarItem/CalendarItemGrid';
-import { ThemeType } from '../../tools/theme';
 import CalendarTilesConfiguration from '../../tools/types/CalendarTileConfiguration';
-import ClassesOverride from '../../tools/types/ClassesOverride';
-import { AdventsCalendarUtilInstance } from '../../tools/utils/AdventsCalendarUtil';
+import { ADMIN_QUERY_PARAM, canAccessDay } from '../../tools/utils/AdventsCalendarUtil';
 import qs from 'qs';
-import { useItemDatabase } from './tools/useItemDatabase';
+import { useCurrentDate } from '../../tools/useCurrentDate';
+import { ViewHeader } from '../../components/ViewHeader/ViewHeader';
+import { InnerContent } from '../../components/InnerContent/InnerContent';
+import { ViewFooter } from '../../components/ViewFooter/ViewFooter';
+import { MainContent } from '../../components/MainContent/MainContent';
+import styles from './calenderView.module.scss';
+import { useItemDatabase } from '../../tools/context/ItemsDatabaseContext';
 
 const items = calendarTilesConfiguration;
 
-const useStyles = makeStyles<ThemeType>(
-    () => ({
-        root: {},
-    }),
-    { name: 'CalendarView' }
-);
-
-export interface CalendarViewProps extends HTMLAttributes<HTMLDivElement> {
-    classes?: ClassesOverride<typeof useStyles>;
-}
-
-export const CalendarView = (props: CalendarViewProps) => {
-    const { className, classes: classesProp, ...restProps } = props;
-    const classes = useStyles({ ...props, classes: classesProp });
-    const history = useHistory();
+export const CalendarView = () => {
+    const navigate = useNavigate();
     const location = useLocation();
-    const { openedDays, saveOpenedDay } = useItemDatabase();
+    const { openedDays, checkOpened, saveOpenedDay } = useItemDatabase();
+    const currentDate = useCurrentDate();
 
-    const [openItemDay, setOpenItemDay] = useState<number | undefined>(undefined);
+    const [openItemDay, setOpenItemDay] = useState<{ day: number; canOpen: boolean } | undefined>(undefined);
     const timeoutId = useRef<NodeJS.Timeout>();
 
     const handleItemClick = useCallback(
@@ -41,31 +31,40 @@ export const CalendarView = (props: CalendarViewProps) => {
             }
 
             const parsedQueryParams = qs.parse(location.search, { ignoreQueryPrefix: true });
-            if (!parsedQueryParams.admin && !AdventsCalendarUtilInstance.canAccessDay(item.day)) {
+            if (!parsedQueryParams[ADMIN_QUERY_PARAM] && !canAccessDay(currentDate, item.day)) {
+                setOpenItemDay({ day: item.day, canOpen: false });
                 console.error('You cannot redirect to that page, yet');
                 return;
             }
 
-            setOpenItemDay(item.day);
+            // If this day was already opened, we directly redirect.
+            if (checkOpened(item.day)) {
+                // redirect to the day view
+                navigate({ pathname: `/day/${item.day}`, search: location.search });
+                return;
+            }
+
+            setOpenItemDay({ day: item.day, canOpen: true });
             timeoutId.current = setTimeout(() => {
                 saveOpenedDay(item.day);
 
                 setOpenItemDay(undefined);
                 // redirect to the day view
-                history.push({
-                    pathname: `/day/${item.day}`,
-                    search: location.search,
-                });
+                navigate({ pathname: `/day/${item.day}`, search: location.search });
             }, 1500);
         },
-        [history, location, saveOpenedDay]
+        [checkOpened, currentDate, navigate, location, saveOpenedDay]
     );
 
     const shuffledItems = useMemo(() => items.sort(() => 0.5 - Math.random()), []);
 
     return (
-        <div className={clsx(classes.root, className)} {...restProps}>
-            <CalendarItemGrid items={shuffledItems} alreadyOpenedDays={openedDays} openItemDay={openItemDay} onItemClick={handleItemClick} />
-        </div>
+        <MainContent className={styles.root}>
+            <ViewHeader />
+            <InnerContent>
+                <CalendarItemGrid items={shuffledItems} alreadyOpenedDays={openedDays} openItemDay={openItemDay} onItemClick={handleItemClick} />
+            </InnerContent>
+            <ViewFooter />
+        </MainContent>
     );
 };
