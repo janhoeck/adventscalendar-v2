@@ -1,9 +1,11 @@
 @import '../../tools/theme/vars';
 
 .root {
-    flex: 1;
-    overflow: auto;
     padding-bottom: 20vh;
+
+    height: fit-content;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
 
     .inner {
         padding: #{$spacing * 3} 5vw;

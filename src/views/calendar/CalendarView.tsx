@@ -56,13 +56,11 @@ export const CalendarView = () => {
         [checkOpened, currentDate, navigate, location, saveOpenedDay]
     );
 
-    const shuffledItems = useMemo(() => items.sort(() => 0.5 - Math.random()), []);
-
     return (
         <MainContent className={styles.root}>
             <ViewHeader />
             <InnerContent>
-                <CalendarItemGrid items={shuffledItems} alreadyOpenedDays={openedDays} openItemDay={openItemDay} onItemClick={handleItemClick} />
+                <CalendarItemGrid items={items} alreadyOpenedDays={openedDays} openItemDay={openItemDay} onItemClick={handleItemClick} />
             </InnerContent>
             <ViewFooter />
         </MainContent>
