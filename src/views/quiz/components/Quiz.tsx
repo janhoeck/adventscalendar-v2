@@ -1,8 +1,9 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import styles from './quiz.module.scss';
 import { CheckboxQuizType, InputQuizType, QuizType } from '../../../tools/types/CalendarTileConfiguration';
 import { InputQuiz } from './InputQuiz/InputQuiz';
 import { CheckboxQuiz } from './CheckboxQuiz/CheckboxQuiz';
+import { Shaker, ShakerRef } from '../../../components/Shaker/Shaker';
 
 export interface QuizProps {
     quiz: QuizType;
@@ -14,14 +15,13 @@ export const Quiz = (props: QuizProps) => {
 
     // starting with the first quiz
     const [currentQuizIndex, setCurrentQuizIndex] = useState<number>(0);
+    const shakerRef = useRef<ShakerRef>(null);
 
     // The current quiz data
     const currentQuiz = useMemo(() => quiz[currentQuizIndex], [quiz, currentQuizIndex]);
     const hasNextQuiz = useMemo(() => currentQuizIndex < quiz.length - 1, [currentQuizIndex, quiz]);
 
     const handleCorrect = () => {
-        // TODO save into local storage
-
         if (hasNextQuiz) {
             setCurrentQuizIndex((currentQuizIndex) => currentQuizIndex + 1);
         } else {
@@ -29,20 +29,40 @@ export const Quiz = (props: QuizProps) => {
         }
     };
 
-    return (
-        <div className={styles.root}>
-            <span className={styles.headline}>Erfülle zuerst das Quiz um das Törchen zu öffnen</span>
+    const handleIncorrect = () => {
+        const { current } = shakerRef;
+        if (!current) {
+            return;
+        }
 
-            <div className={styles.container}>
-                <span className={styles.question}>
-                    {currentQuizIndex + 1}. {currentQuiz.question}
+        current.shake();
+    };
+
+    return (
+        <Shaker ref={shakerRef}>
+            <div className={styles.root}>
+                <span className={styles.statusIndicator}>
+                    Frage {currentQuizIndex + 1} von {quiz.length}
                 </span>
-                {currentQuiz.variant === 'input' ? (
-                    <InputQuiz key={currentQuiz.question} quiz={currentQuiz as InputQuizType} onCorrect={handleCorrect} />
-                ) : (
-                    <CheckboxQuiz key={currentQuiz.question} quiz={currentQuiz as CheckboxQuizType} onCorrect={handleCorrect} />
-                )}
+                <div className={styles.container}>
+                    <span className={styles.question}>{currentQuiz.question}</span>
+                    {currentQuiz.variant === 'input' ? (
+                        <InputQuiz
+                            key={currentQuiz.question}
+                            quiz={currentQuiz as InputQuizType}
+                            onCorrect={handleCorrect}
+                            onIncorrect={handleIncorrect}
+                        />
+                    ) : (
+                        <CheckboxQuiz
+                            key={currentQuiz.question}
+                            quiz={currentQuiz as CheckboxQuizType}
+                            onCorrect={handleCorrect}
+                            onIncorrect={handleIncorrect}
+                        />
+                    )}
+                </div>
             </div>
-        </div>
+        </Shaker>
     );
 };

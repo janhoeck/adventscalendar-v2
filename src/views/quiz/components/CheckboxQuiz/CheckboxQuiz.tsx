@@ -7,12 +7,12 @@ import styles from './checkboxQuiz.module.scss';
 export interface CheckboxQuizProps {
     quiz: CheckboxQuizType;
     onCorrect: (quiz: CheckboxQuizType) => void;
+    onIncorrect: () => void;
 }
 
 export const CheckboxQuiz: React.VFC<CheckboxQuizProps> = (props) => {
-    const { quiz, onCorrect } = props;
+    const { quiz, onCorrect, onIncorrect } = props;
     const [selectedAnswerIndex, setSelectedAnswerIndex] = useState<number | undefined>(undefined);
-    const [isWrongAnswerProvided, setIsWrongAnswerProvided] = useState<boolean>(false);
 
     const handleAnswerChange = (answerIndex: number) => () => {
         setSelectedAnswerIndex(answerIndex);
@@ -21,7 +21,7 @@ export const CheckboxQuiz: React.VFC<CheckboxQuizProps> = (props) => {
     const handleConfirmClick = () => {
         const isCorrect = quiz.correctAnswerIndex === selectedAnswerIndex;
         if (!isCorrect) {
-            setIsWrongAnswerProvided(true);
+            onIncorrect();
             return;
         }
 
@@ -42,7 +42,6 @@ export const CheckboxQuiz: React.VFC<CheckboxQuizProps> = (props) => {
                 ))}
             </div>
             <ConfirmButton onClick={handleConfirmClick}>Weiter</ConfirmButton>
-            {isWrongAnswerProvided && <span>Falsch</span>}
         </div>
     );
 };

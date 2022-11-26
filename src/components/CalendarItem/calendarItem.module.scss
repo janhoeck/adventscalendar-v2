@@ -1,4 +1,4 @@
-@import 'src/tools/theme/vars';
+@import '../../tools/theme/vars';
 
 .root {
     height: 200px;
@@ -19,11 +19,9 @@
             height: 100%;
             width: 100%;
             background: $color_primary_main;
-            line-height: 300px;
-            color: #03446a;
-            text-align: center;
-            font-size: 60px;
+            color: white;
             backface-visibility: hidden;
+            box-shadow: 5px 5px 0px 0px $color_primary_dark;
 
             display: flex;
             align-items: center;
@@ -41,29 +39,23 @@
             }
         }
 
-        .front {
-            box-shadow: 5px 5px 0px 0px $color_primary_dark;
-        }
-
         .back {
-            box-shadow: 5px 5px 0px 0px $color_primary_dark;
-            background: $color_primary_light;
-            color: white;
             transform: rotateY(180deg);
         }
 
         .text {
+            text-align: center;
             color: $color_text;
-            font-family: 'CartoonBlocksChristmas';
-            font-weight: 400;
-            line-height: 1.5;
-            letter-spacing: 0.00938em;
+            font-size: 3.3rem;
+            line-height: 3.3rem;
+            font-family: $christmas_font;
         }
     }
 }
 
 .clickable {
     cursor: pointer;
+    @include button-press;
 }
 
 .flip {

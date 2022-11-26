@@ -8,5 +8,12 @@
         display: flex;
         justify-content: center;
         max-width: 1000px;
+
+        .quizContainer {
+            z-index: 1; // Because snowflakes should not flow over
+            padding: $spacing * 2;
+            border-radius: 4px;
+            background-color: #0c595d;
+        }
     }
 }

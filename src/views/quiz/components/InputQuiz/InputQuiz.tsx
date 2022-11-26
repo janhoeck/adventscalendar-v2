@@ -6,12 +6,12 @@ import styles from './inputQuiz.module.scss';
 export interface InputQuizProps {
     quiz: InputQuizType;
     onCorrect: (quiz: InputQuizType) => void;
+    onIncorrect: () => void;
 }
 
 export const InputQuiz: React.VFC<InputQuizProps> = (props) => {
-    const { quiz, onCorrect } = props;
+    const { quiz, onCorrect, onIncorrect } = props;
     const [value, setValue] = useState<string>('');
-    const [isWrongAnswerProvided, setIsWrongAnswerProvided] = useState<boolean>(false);
 
     const handleValueChange = (event: React.ChangeEvent<{ value: string }>) => {
         setValue(event.target.value);
@@ -20,11 +20,10 @@ export const InputQuiz: React.VFC<InputQuizProps> = (props) => {
     const handleConfirm = () => {
         const isCorrect = quiz.correctAnswer.toLowerCase() === value.toLowerCase();
         if (!isCorrect) {
-            setIsWrongAnswerProvided(true);
+            onIncorrect();
             return;
         }
 
-        setIsWrongAnswerProvided(false);
         onCorrect(quiz);
     };
 
@@ -40,7 +39,6 @@ export const InputQuiz: React.VFC<InputQuizProps> = (props) => {
                 <input autoFocus value={value} onChange={handleValueChange} onKeyDown={handleKeyDown} />
                 <ConfirmButton onClick={handleConfirm}>Weiter</ConfirmButton>
             </div>
-            {isWrongAnswerProvided && <span>Falsch</span>}
         </div>
     );
 };

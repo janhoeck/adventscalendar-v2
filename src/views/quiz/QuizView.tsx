@@ -22,14 +22,16 @@ export const QuizView = (props: QuizViewProps) => {
 
     const handleFinishQuiz = () => {
         solveQuiz(item.day);
-        navigate({ pathname: `/day/${item.day}/quiz/finish`, search });
+        navigate({ pathname: `/day/${item.day}`, search });
     };
 
     return (
         <MainContent className={styles.root}>
             <ViewHeader />
             <InnerContent innerClassName={styles.innerContent}>
-                <Quiz quiz={item?.quiz || []} onAllCorrect={handleFinishQuiz} />
+                <div className={styles.quizContainer}>
+                    <Quiz quiz={item?.quiz || []} onAllCorrect={handleFinishQuiz} />
+                </div>
             </InnerContent>
             <ViewFooter />
         </MainContent>

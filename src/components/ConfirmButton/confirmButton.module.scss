@@ -10,7 +10,5 @@
     cursor: pointer;
     transition: 0.2s all;
 
-    &:active {
-        transform: scale(0.98);
-    }
+    @include button-press;
 }

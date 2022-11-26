@@ -7,22 +7,18 @@ import styles from './calendarItem.module.scss';
 export interface CalendarItemProps extends HTMLAttributes<HTMLDivElement> {
     item: CalendarTilesConfiguration;
     variant?: 'closed' | 'open';
-    /**
-     * Set it to true of the item should get a short shake animation
-     */
-    shake?: boolean;
 
     classes?: Classes<'root' | 'content' | 'front' | 'back' | 'text'>;
 }
 
 export const CalendarItem = (props: CalendarItemProps) => {
-    const { className, classes = {}, item, variant = 'closed', onClick, shake, ...restProps } = props;
+    const { className, classes = {}, item, variant = 'closed', onClick, ...restProps } = props;
+
     return (
         <div
             className={clsx(styles.root, classes.root, className, {
                 [styles.clickable]: typeof onClick === 'function',
                 [styles.flip]: variant === 'open',
-                [styles.shake]: shake,
             })}
             onClick={onClick}
             {...restProps}
@@ -38,5 +34,3 @@ export const CalendarItem = (props: CalendarItemProps) => {
         </div>
     );
 };
-
-CalendarItem.displayName = 'CalendarItem';

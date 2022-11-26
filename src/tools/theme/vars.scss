@@ -7,26 +7,10 @@ $color_primary_dark: #6e1f27;
 $spacing: 8px;
 
 $normal_text_font: Lucida Grande, Lucida Sans Unicode, Lucida Sans, Geneva, Verdana, sans-serif;
+$christmas_font: 'Christmas';
 
-@keyframes shake {
-    10%,
-    90% {
-        transform: translate3d(-1px, 0, 0);
-    }
-
-    20%,
-    80% {
-        transform: translate3d(2px, 0, 0);
-    }
-
-    30%,
-    50%,
-    70% {
-        transform: translate3d(-4px, 0, 0);
-    }
-
-    40%,
-    60% {
-        transform: translate3d(4px, 0, 0);
+@mixin button-press {
+    &:active {
+        transform: scale(0.98);
     }
 }

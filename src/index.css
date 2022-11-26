@@ -1,11 +1,6 @@
 @font-face {
-    font-family: 'ReindeerChristmas';
-    src: local('ReindeerChristmas'), url(./assets/fonts/reindeerChristmas.otf) format('truetype');
-}
-
-@font-face {
-    font-family: 'CartoonBlocksChristmas';
-    src: local('CartoonBlocksChristmas'), url(./assets/fonts/cartoonBlocksChristmas.otf) format('truetype');
+    font-family: 'Christmas';
+    src: url(./assets/fonts/Christmas.otf) format('opentype'), url(./assets/fonts/Christmas.ttf) format('truetype');
 }
 
 html,

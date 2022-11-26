@@ -3,15 +3,8 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { App } from './App';
 import reportWebVitals from './reportWebVitals';
-import Snowflakes from 'magic-snowflakes';
 
 import './index.css';
-
-const snowflakes = new Snowflakes({
-    color: '#FFF',
-    count: 20,
-});
-snowflakes.start();
 
 ReactDOM.render(
     <BrowserRouter basename='/adventscalendar'>

@@ -9,7 +9,7 @@ export interface ViewHeaderProps {
 export const ViewHeader: React.VFC<ViewHeaderProps> = ({ className }) => {
     return (
         <header className={clsx(styles.root, className)}>
-            <span className={styles.headline}>(Adventskalender)</span>
+            <span className={styles.headline}>Julia's Adventskalender</span>
         </header>
     );
 };
